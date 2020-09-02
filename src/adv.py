@@ -49,3 +49,59 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+location = room["outside"]      
+
+while location == room["outside"]:
+    print(room["outside"])
+    selection = input("Please select a direction from the following: [n] >>>")
+    try:
+        if selection == 'n':
+            print(room["foyer"])
+            location = room["foyer"]
+    except ValueError:
+        print("please select a valid direction: [n]")
+
+while location == room["foyer"]:
+    selection = input("Please select a direction from the following: [n,s,w] >>>")
+    try:
+        if selection == 'n':
+            print(room["overlook"])
+            location = room["overlook"]
+        elif selection == 's':
+            print(room["outside"])
+            location = room["outside"]
+        elif selection == 'w':
+            print(room["narrow"])
+            location = room["narrow"]
+    except ValueError:
+        print("please select a valid direction: [n,s,w]")
+
+while location == room["overlook"]:
+    selection = input("Please select a direction from the following: [s] >>>")
+    try:
+        if selection == 's':
+            print(room["foyer"])
+            location = room["foyer"]
+    except ValueError:
+        print("please select a valid direction: [s]")
+
+while location == room["narrow"]:
+    selection = input("Please select a direction from the following: [n] >>>")
+    try:
+        if selection == 'n':
+            print(room["treasure"])
+            location = room["treasure"]
+        elif selection == 'w':
+            print(room["foyer"])
+            location = room["foyer"]
+    except ValueError:
+        print("please select a valid direction: [n,w]")
+
+while location == room["treasure"]:
+    try:
+        if selection == 's':
+            print(room["narrow"])
+            location = room["narrow"]
+    except ValueError:
+        print("please select a valid direction: [s]")

@@ -2,9 +2,9 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, current_room):
+    def __init__(self, name, description):
         self.name = name
-        self.current_room = current_room
+        self.description = description
     
     def __str__(self):
-        return f'Name: {self.name}, current_room: {self.current_room}'
+        return f'\n Your Location: {self.name} \n Description: {self.description}'
