@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -51,36 +52,61 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-#Listens for input of name
+# Listens for input of name
 name = input("Welcome traveler. What is your name?: ") or 'Link'
 
-#Defaults current_room attr in `Player` class to outside room
+# Defaults current_room attr in `Player` class to outside room
 player = Player(name, room['outside'])
 
-#prints name and description from current_room
+# Items
+master_sword = Item('Master_Sword', 'The legendary sword that seals the darkness.')
+hylian_shield = Item('Hylian_Shield', 'This is a big, heavy shield just like the ones Hylian Knights use. It can stand up to flame attacks!')
+bombs = Item('Bombs','Careful, they explode')
+tunic = Item('Green_Tunic', "A hero's clothing")
+
+# Item Locations
+room['treasure'].items = [master_sword]
+room['overlook'].items = [tunic, bombs]
+room['foyer'].items = [hylian_shield]
+
+
+# prints name and description from current_room
 print(f"{player.current_room.name}") # == Room("Outside Cave Entrance","North of you, the cave mount beckons"); Outside Cave Entrance == name
 print(f"{player.current_room.description}") # == Room("Outside Cave Entrance","North of you, the cave mount beckons"); North of you, the cave mount beckons == description
 
+def get_item():
+    selection = input("-------------------------\n Choose an item to grab. [Tip: type grab bombs] ").split()
+    for i in player.current_room.items:
+        if selection[0] == 'grab' and selection[1] == i.name:
+            player.items.append(i)
+            player.current_room.items.remove(i)
+        else:
+            print("Not a valid option, follow this example to grab items: grab bombs. ")
+
 def new_location():
     print(player.current_room)
+    if len(player.current_room.items) > 0:
+        get_item()
+        print(player)
 
 def wrong_move():
     print("Invalid move try again.")
 
+
 #sets selection to an empty string
 selection = ''
 
-print('\n current room', player.current_room)
-print('-------------------------------------------')
-print('\n',  getattr(room['outside'], 'n_to'))
-print('-------------------------------------------')
-print('\n test 2', room['outside'].n_to)
-print('-------------------------------------------')
-print('\n current room.n_to', player.current_room.n_to)
-print('-------------------------------------------')
+# print('\n current room', player.current_room)
+# print('-------------------------------------------')
+# print('\n',  getattr(room['outside'], 'n_to'))
+# print('-------------------------------------------')
+# print('\n test 2', room['outside'].n_to)
+# print('-------------------------------------------')
+# print('\n current room.n_to', player.current_room.n_to)
+# print('-------------------------------------------')
 
 while selection != 'q': # while selection input isn't `q` listen for more inputs
-    selection = input("Please select a direction from the following: [n,s,e,w] >>> ")
+    selection = input("Please select a direction from the following: [n,s,e,w] or press 'q' to close the game >>> ")
     if selection == 'n': #if selection is `n`, `try` to set `current_room` attr to be `.n_to` attr in the Room object.
         try:
             player.current_room = player.current_room.n_to
