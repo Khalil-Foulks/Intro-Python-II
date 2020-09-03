@@ -6,5 +6,5 @@ class Player:
         self.name = name
         self.current_room = current_room
         
-    def __str__(self):
-        return f"Current location: {self.current_room}"    
+    # def __str__(self):
+    #     return f"{self.current_room}"    
